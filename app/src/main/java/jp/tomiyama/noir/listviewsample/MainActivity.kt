@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     val lvMenu = findViewById<ListView>(R.id.lvMenu)
     // ListViewにリスナを設定
     lvMenu.onItemClickListener = ListItemClickListener()
+
   }
 
   // リストがタップされたときの処理が記述されたメンバクラス
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
       // タップされた定食名を取得
       val item = parent.getItemAtPosition(position) as String
       // トーストで表示する文字列を生成
-      val showMessage = "あなたが選んだ定食：" + item
+      val showMessage = "あなたが選んだ定食：$item"
       // トーストの表示
       Toast.makeText(applicationContext,showMessage,Toast.LENGTH_LONG).show()
     }
