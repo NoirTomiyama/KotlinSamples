@@ -1,6 +1,8 @@
 package jp.tomiyama.noir.listviewsample2
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -24,5 +26,17 @@ class MainActivity : AppCompatActivity() {
     val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, menuList)
     // リストビューにアダプタオブジェクトを設定
     lvMenu.adapter = adapter
+    // リストビューにリスナを設定
+    lvMenu.onItemClickListener = ListItemClickListener()
+  }
+
+  // リストがタップされたときの処理が記述されたメンバクラス
+  private inner class ListItemClickListener : AdapterView.OnItemClickListener{
+    override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+      // 注文確認ダイアログフラグメントオブジェクトを生成
+      val dialogFragment = OrderConfirmDialogFragment()
+      // ダイアログ表示
+      dialogFragment.show(supportFragmentManager,"OrderConfirmDialogFragment")
+    }
   }
 }
