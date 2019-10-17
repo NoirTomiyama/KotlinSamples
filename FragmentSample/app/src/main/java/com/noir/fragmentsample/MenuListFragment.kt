@@ -1,9 +1,11 @@
 package com.noir.fragmentsample
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.SimpleAdapter
 import androidx.fragment.app.Fragment
@@ -56,10 +58,29 @@ class MenuListFragment : Fragment() {
     val adapter = SimpleAdapter(activity, menuList, android.R.layout.simple_list_item_2, from, to)
     // アダプタの登録
     lvMenu.adapter = adapter
+    // リスナの登録
+    lvMenu.onItemClickListener = ListItemClickListener()
 
     // インフレートされた画面を戻り値として返す
     return view
   }
 
-
+  // リストがタップされた時の処理が記述されたメンバクラス
+  private inner class ListItemClickListener : AdapterView.OnItemClickListener {
+    override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+      // タップされた行のデータを取得．SimpleAdapterでは1行分のデータはMutableMap型
+      val item = parent.getItemAtPosition(position) as MutableMap<String, String>
+      // 定食と金額を取得
+      val menuName = item["name"]
+      val menuPrice = item["price"]
+      // インテントオブジェクトを生成
+      val intent = Intent(activity, MenuThanksActivity::class.java)
+      // 第2画面に送るデータを格納
+      intent.putExtra("menuName", menuName)
+      intent.putExtra("menuPrice", menuPrice)
+      // 第2画面の起動
+      startActivity(intent)
+    }
+  }
+  
 }
