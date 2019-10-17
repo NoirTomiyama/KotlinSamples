@@ -2,6 +2,7 @@ package com.noir.menusample
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
@@ -49,6 +50,13 @@ class MainActivity : AppCompatActivity() {
       // 第2画面の起動
       startActivity(intent)
     }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    // オプションメニュー用xmlファイルをインフレイト
+    menuInflater.inflate(R.menu.menu_options_menu_list, menu)
+    // 親クラスの同名メソッドを呼び出し，その戻り値を返却
+    return super.onCreateOptionsMenu(menu)
   }
 
   private fun createTeishokuList(): MutableList<MutableMap<String, Any>> {
