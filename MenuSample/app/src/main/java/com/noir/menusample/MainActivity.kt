@@ -2,6 +2,7 @@ package com.noir.menusample
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     lvMenu.adapter = adapter
     // リストタップのリスナクラス登録
     lvMenu.onItemClickListener = ListItemClickListener()
+
+    registerForContextMenu(lvMenu)
   }
 
   // リストがタップされた時の処理が記述されたメンバクラス
@@ -51,6 +54,19 @@ class MainActivity : AppCompatActivity() {
       // 第2画面の起動
       startActivity(intent)
     }
+  }
+
+  override fun onCreateContextMenu(
+    menu: ContextMenu,
+    view: View,
+    menuInfo: ContextMenu.ContextMenuInfo
+  ) {
+    // 親クラスの同名メソッドの呼び出し
+    super.onCreateContextMenu(menu, view, menuInfo)
+    // コンテキストメニュー用xmlファイルをインフレイト
+    menuInflater.inflate(R.menu.menu_context_menu_list, menu)
+    // コンテキストメニューのヘッダタイトルを設定
+    menu.setHeaderTitle(R.string.menu_list_context_header)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
