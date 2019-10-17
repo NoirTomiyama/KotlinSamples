@@ -1,7 +1,7 @@
 package com.noir.menusample
 
 import android.os.Bundle
-import android.view.View
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -22,10 +22,16 @@ class MenuThanksActivity : AppCompatActivity() {
     // TextViewに定食名と金額を表示
     tvMenuName.text = menuName
     tvMenuPrice.text = menuPrice
+
+    supportActionBar?.setDisplayHomeAsUpEnabled(true)
   }
 
-  // 戻るボタンをタップした時の処理
-  fun onBackButtonClick(view: View) {
-    finish()
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    // 選択されたメニューが[戻る]の場合，アクティビティを終了
+    if (item.itemId == android.R.id.home) {
+      finish()
+    }
+    // 親クラスの同名メソッドを呼び出し，その戻り値を返却
+    return super.onOptionsItemSelected(item)
   }
 }
