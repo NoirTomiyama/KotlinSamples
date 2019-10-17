@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     lvMenu.adapter = adapter
     // リストタップのリスナクラス登録
     lvMenu.onItemClickListener = ListItemClickListener()
-
+    // コンテキストメニューを表示させるListViewの登録
     registerForContextMenu(lvMenu)
   }
 
