@@ -1,6 +1,9 @@
 package jp.tomiyama.noir.intentsample
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.SimpleAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -46,8 +49,30 @@ class MainActivity : AppCompatActivity() {
     // SimpleAdapter第5引数to用データの用意
     val to = intArrayOf(android.R.id.text1, android.R.id.text2)
     // SimpleAdapterを作成
-    val adapter = SimpleAdapter(applicationContext, menuList, android.R.layout.simple_list_item_2, from, to)
+    val adapter =
+      SimpleAdapter(applicationContext, menuList, android.R.layout.simple_list_item_2, from, to)
     // アダプタの登録
     lvMenu.adapter = adapter
+
+    // リストタップのリスナクラス登録
+    lvMenu.onItemClickListener = ListItemClickListener()
+  }
+
+  // リストがタップされた時の処理が記述されたメンバクラス
+  private inner class ListItemClickListener : AdapterView.OnItemClickListener {
+    override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+      // タップされた行のデータを取得．SimpleAdapterでは1行分のデータはMutableMap型
+      val item = parent.getItemAtPosition(position) as MutableMap<String, String>
+      // 定食と金額を取得
+      val menuName = item["name"]
+      val menuPrice = item["price"]
+      // インテントオブジェクトを生成
+      val intent = Intent(applicationContext, MenuThanksActivity::class.java)
+      // 第2画面に送るデータを格納
+      intent.putExtra("menuName", menuName)
+      intent.putExtra("menuPrice", menuPrice)
+      // 第2画面の起動
+      startActivity(intent)
+    }
   }
 }
