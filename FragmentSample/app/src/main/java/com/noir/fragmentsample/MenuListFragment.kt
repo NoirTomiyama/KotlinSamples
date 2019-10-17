@@ -65,6 +65,25 @@ class MenuListFragment : Fragment() {
     return view
   }
 
+  /**
+   * 大画面かどうかの判定フラグ
+   * trueが大画面，falseが通常画面
+   * 判定ロジックは同一画面に注文完了表示用フレームレイアウトが存在するかで行う
+   */
+  private var _isLayoutXLarge = true
+
+  override fun onActivityCreated(savedInstanceState: Bundle?) {
+    // 親クラスのメソッド呼び出し
+    super.onActivityCreated(savedInstanceState)
+    // 自分が所属するアクティビティからmenuThanksFrameを取得
+    val menuThanksFrame = activity?.findViewById<View>(R.id.menuThanksFrame)
+    // menuThanksFrameがnull，つまり存在しないなら...
+    if (menuThanksFrame == null) {
+      // 画面判定フラグを通常画面とする
+      _isLayoutXLarge = false
+    }
+  }
+
   // リストがタップされた時の処理が記述されたメンバクラス
   private inner class ListItemClickListener : AdapterView.OnItemClickListener {
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -73,14 +92,38 @@ class MenuListFragment : Fragment() {
       // 定食と金額を取得
       val menuName = item["name"]
       val menuPrice = item["price"]
-      // インテントオブジェクトを生成
-      val intent = Intent(activity, MenuThanksActivity::class.java)
-      // 第2画面に送るデータを格納
-      intent.putExtra("menuName", menuName)
-      intent.putExtra("menuPrice", menuPrice)
-      // 第2画面の起動
-      startActivity(intent)
+
+      // 引き継ぎデータをまとめて格納できるBundleオブジェクト生成
+      val bundle = Bundle()
+      // Bundleオブジェクトに引き継ぎデータを格納
+      bundle.putString("menuName", menuName)
+      bundle.putString("menuPrice", menuPrice)
+
+      // 大画面の場合
+      if (_isLayoutXLarge) {
+        // フラグメントトランザクションの開始
+        val transaction = fragmentManager?.beginTransaction()
+        // 注文完了フラグメントを生成
+        val menuThanksFragment = MenuThanksFragment()
+        // 引き継ぎデータを注文完了フラグメントに格納
+        menuThanksFragment.arguments = bundle
+        // 生成した注文完了フラグメントをmenuThanksFrameレイアウトに追加(置き換え)
+        transaction?.replace(R.id.menuThanksFrame, menuThanksFragment)
+        // フラグメントトランザクションのコミット
+        transaction?.commit()
+      }
+
+      // 通常画面の場合
+      else {
+        // インテントオブジェクトを生成
+        val intent = Intent(activity, MenuThanksActivity::class.java)
+        // 第2画面に送るデータを格納．ここでは，Bundleオブジェクトとしてまとめて格納
+        intent.putExtras(bundle)
+        // 第2画面の起動
+        startActivity(intent)
+      }
+
     }
   }
-  
+
 }
