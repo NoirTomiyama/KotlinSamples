@@ -3,6 +3,7 @@ package com.noir.menusample
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
@@ -59,10 +60,83 @@ class MainActivity : AppCompatActivity() {
     return super.onCreateOptionsMenu(menu)
   }
 
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    // 選択されたメニューのIDのR値による処理の分岐
+    when (item.itemId) {
+      // 定食メニューが選択された場合の処理
+      R.id.menuListOptionTeishoku ->
+        // 定食メニューリストデータの生成
+        _menuList = createTeishokuList()
+      // カレーメニューが選択された場合の処理
+      R.id.menuListOptionCurry ->
+        _menuList = createCurryList()
+    }
+    // 画面部品ListViewを取得
+    val lvMenu = findViewById<ListView>(R.id.lvMenu)
+    // SimpleAdapterを生成
+    val adapter = SimpleAdapter(applicationContext, _menuList, R.layout.row, FROM, TO)
+    // アダプタの登録
+    lvMenu.adapter = adapter
+    // 親クラスの同名メソッドを呼び出し，その戻り値を返却
+    return super.onOptionsItemSelected(item)
+  }
+
+  private fun createCurryList(): MutableList<MutableMap<String, Any>> {
+    //カレーメニューリスト用のListオブジェクトを用意
+    val menuList: MutableList<MutableMap<String, Any>> = mutableListOf()
+    //「ビーフカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録
+    var menu =
+      mutableMapOf(
+        "name" to "ビーフカレー",
+        "price" to 520,
+        "desc" to "特選スパイスをきかせた国産ビーフ100%のカレーです。"
+      )
+    menuList.add(menu)
+    //「ポークカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録
+    menu = mutableMapOf(
+      "name" to "ポークカレー",
+      "price" to 420,
+      "desc" to "特選スパイスをきかせた国産ポーク100%のカレーです。"
+    )
+    menuList.add(menu)
+    //以下データ登録の繰り返し
+    menu = mutableMapOf(
+      "name" to "ハンバーグカレー",
+      "price" to 620,
+      "desc" to "特選スパイスをきかせたカレーに手ごねハンバーグをトッピングです。"
+    )
+    menuList.add(menu)
+    menu = mutableMapOf(
+      "name" to "チーズカレー",
+      "price" to 560,
+      "desc" to "特選スパイスをきかせたカレーにとろけるチーズをトッピングです。"
+    )
+    menuList.add(menu)
+    menu = mutableMapOf(
+      "name" to "カツカレー",
+      "price" to 760,
+      "desc" to "特選スパイスをきかせたカレーに国産ロースカツをトッピングです。"
+    )
+    menuList.add(menu)
+    menu = mutableMapOf(
+      "name" to "ビーフカツカレー",
+      "price" to 880,
+      "desc" to "特選スパイスをきかせたカレーに国産ビーフカツをトッピングです。"
+    )
+    menuList.add(menu)
+    menu = mutableMapOf(
+      "name" to "からあげカレー",
+      "price" to 540,
+      "desc" to "特選スパイスをきかせたカレーに若鳥のから揚げをトッピングです。"
+    )
+    menuList.add(menu)
+    return menuList
+  }
+
   private fun createTeishokuList(): MutableList<MutableMap<String, Any>> {
     // 定食メニューリスト用のListオブジェクトを用意
     val menuList: MutableList<MutableMap<String, Any>> = mutableListOf()
-    //「から揚げ定食」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+    //「から揚げ定食」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録
     var menu =
       mutableMapOf(
         "name" to "から揚げ定食",
@@ -70,7 +144,7 @@ class MainActivity : AppCompatActivity() {
         "desc" to "若鳥のから揚げにサラダ、ご飯とお味噌汁が付きます。"
       )
     menuList.add(menu)
-    //「ハンバーグ定食」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+    //「ハンバーグ定食」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録
     menu = mutableMapOf(
       "name" to "ハンバーグ定食",
       "price" to 850,
