@@ -65,11 +65,7 @@ class MainActivity : AppCompatActivity() {
     startActivity(intent)
   }
 
-  override fun onCreateContextMenu(
-    menu: ContextMenu,
-    view: View,
-    menuInfo: ContextMenu.ContextMenuInfo
-  ) {
+  override fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenu.ContextMenuInfo) {
     // 親クラスの同名メソッドの呼び出し
     super.onCreateContextMenu(menu, view, menuInfo)
     // コンテキストメニュー用xmlファイルをインフレイト
@@ -137,50 +133,21 @@ class MainActivity : AppCompatActivity() {
     //カレーメニューリスト用のListオブジェクトを用意
     val menuList: MutableList<MutableMap<String, Any>> = mutableListOf()
     //「ビーフカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録
-    var menu =
-      mutableMapOf(
-        "name" to "ビーフカレー",
-        "price" to 520,
-        "desc" to "特選スパイスをきかせた国産ビーフ100%のカレーです。"
-      )
+    var menu = mutableMapOf("name" to "ビーフカレー", "price" to 520, "desc" to "特選スパイスをきかせた国産ビーフ100%のカレーです。")
     menuList.add(menu)
     //「ポークカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録
-    menu = mutableMapOf(
-      "name" to "ポークカレー",
-      "price" to 420,
-      "desc" to "特選スパイスをきかせた国産ポーク100%のカレーです。"
-    )
+    menu = mutableMapOf("name" to "ポークカレー", "price" to 420, "desc" to "特選スパイスをきかせた国産ポーク100%のカレーです。")
     menuList.add(menu)
     //以下データ登録の繰り返し
-    menu = mutableMapOf(
-      "name" to "ハンバーグカレー",
-      "price" to 620,
-      "desc" to "特選スパイスをきかせたカレーに手ごねハンバーグをトッピングです。"
-    )
+    menu = mutableMapOf("name" to "ハンバーグカレー", "price" to 620, "desc" to "特選スパイスをきかせたカレーに手ごねハンバーグをトッピングです。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "チーズカレー",
-      "price" to 560,
-      "desc" to "特選スパイスをきかせたカレーにとろけるチーズをトッピングです。"
-    )
+    menu = mutableMapOf("name" to "チーズカレー", "price" to 560, "desc" to "特選スパイスをきかせたカレーにとろけるチーズをトッピングです。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "カツカレー",
-      "price" to 760,
-      "desc" to "特選スパイスをきかせたカレーに国産ロースカツをトッピングです。"
-    )
+    menu = mutableMapOf("name" to "カツカレー", "price" to 760, "desc" to "特選スパイスをきかせたカレーに国産ロースカツをトッピングです。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "ビーフカツカレー",
-      "price" to 880,
-      "desc" to "特選スパイスをきかせたカレーに国産ビーフカツをトッピングです。"
-    )
+    menu = mutableMapOf("name" to "ビーフカツカレー", "price" to 880, "desc" to "特選スパイスをきかせたカレーに国産ビーフカツをトッピングです。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "からあげカレー",
-      "price" to 540,
-      "desc" to "特選スパイスをきかせたカレーに若鳥のから揚げをトッピングです。"
-    )
+    menu = mutableMapOf("name" to "からあげカレー", "price" to 540, "desc" to "特選スパイスをきかせたカレーに若鳥のから揚げをトッピングです。")
     menuList.add(menu)
     return menuList
   }
@@ -189,75 +156,29 @@ class MainActivity : AppCompatActivity() {
     // 定食メニューリスト用のListオブジェクトを用意
     val menuList: MutableList<MutableMap<String, Any>> = mutableListOf()
     //「から揚げ定食」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録
-    var menu =
-      mutableMapOf(
-        "name" to "から揚げ定食",
-        "price" to 800,
-        "desc" to "若鳥のから揚げにサラダ、ご飯とお味噌汁が付きます。"
-      )
+    var menu = mutableMapOf("name" to "から揚げ定食", "price" to 800, "desc" to "若鳥のから揚げにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
     //「ハンバーグ定食」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録
-    menu = mutableMapOf(
-      "name" to "ハンバーグ定食",
-      "price" to 850,
-      "desc" to "手ごねハンバーグにサラダ、ご飯とお味噌汁が付きます。"
-    )
+    menu = mutableMapOf("name" to "ハンバーグ定食", "price" to 850, "desc" to "手ごねハンバーグにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
     //以下データ登録の繰り返し。
-    menu = mutableMapOf(
-      "name" to "生姜焼き定食",
-      "price" to 850,
-      "desc" to "すりおろし生姜を使った生姜焼きにサラダ、ご飯とお味噌汁が付きます。"
-    )
+    menu = mutableMapOf("name" to "生姜焼き定食", "price" to 850, "desc" to "すりおろし生姜を使った生姜焼きにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "ステーキ定食",
-      "price" to 1000,
-      "desc" to "国産牛のステーキにサラダ、ご飯とお味噌汁が付きます。"
-    )
+    menu = mutableMapOf("name" to "ステーキ定食", "price" to 1000, "desc" to "国産牛のステーキにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "野菜炒め定食",
-      "price" to 750,
-      "desc" to "季節の野菜炒めにサラダ、ご飯とお味噌汁が付きます。"
-    )
+    menu = mutableMapOf("name" to "野菜炒め定食", "price" to 750, "desc" to "季節の野菜炒めにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "とんかつ定食",
-      "price" to 900,
-      "desc" to "ロースとんかつにサラダ、ご飯とお味噌汁が付きます。"
-    )
+    menu = mutableMapOf("name" to "とんかつ定食", "price" to 900, "desc" to "ロースとんかつにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "ミンチかつ定食",
-      "price" to 850,
-      "desc" to "手ごねミンチカツにサラダ、ご飯とお味噌汁が付きます。"
-    )
+    menu = mutableMapOf("name" to "ミンチかつ定食", "price" to 850, "desc" to "手ごねミンチカツにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "チキンカツ定食",
-      "price" to 900,
-      "desc" to "ボリュームたっぷりチキンカツにサラダ、ご飯とお味噌汁が付きます。"
-    )
+    menu = mutableMapOf("name" to "チキンカツ定食", "price" to 900, "desc" to "ボリュームたっぷりチキンカツにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
-    menu =
-      mutableMapOf(
-        "name" to "コロッケ定食",
-        "price" to 850,
-        "desc" to "北海道ポテトコロッケにサラダ、ご飯とお味噌汁が付きます。"
-      )
+    menu = mutableMapOf("name" to "コロッケ定食", "price" to 850, "desc" to "北海道ポテトコロッケにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "焼き魚定食",
-      "price" to 850,
-      "desc" to "鰆の塩焼きにサラダ、ご飯とお味噌汁が付きます。"
-    )
+    menu = mutableMapOf("name" to "焼き魚定食", "price" to 850, "desc" to "鰆の塩焼きにサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
-    menu = mutableMapOf(
-      "name" to "焼肉定食",
-      "price" to 950,
-      "desc" to "特性たれの焼肉にサラダ、ご飯とお味噌汁が付きます。"
-    )
+    menu = mutableMapOf("name" to "焼肉定食", "price" to 950, "desc" to "特性たれの焼肉にサラダ、ご飯とお味噌汁が付きます。")
     menuList.add(menu)
     return menuList
   }
