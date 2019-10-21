@@ -59,6 +59,5 @@ class MainActivity : AppCompatActivity() {
       val tvCityName = findViewById<TextView>(R.id.tvCityName)
       tvCityName.setText(cityName + "の天気：")
     }
-
   }
 }
