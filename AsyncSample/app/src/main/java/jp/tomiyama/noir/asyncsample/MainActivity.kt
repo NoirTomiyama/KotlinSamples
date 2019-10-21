@@ -1,5 +1,6 @@
 package jp.tomiyama.noir.asyncsample
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -58,6 +59,32 @@ class MainActivity : AppCompatActivity() {
       // 取得した都市名をtvCityNameに設定
       val tvCityName = findViewById<TextView>(R.id.tvCityName)
       tvCityName.setText(cityName + "の天気：")
+      // WeatherInfoReceiverインスタンス生成
+      val receiver = WeatherInfoReceiver()
+      // WeatherInfoReceiverを実行
+      receiver.execute(cityId)
+    }
+  }
+
+  private inner class WeatherInfoReceiver() : AsyncTask<String, String, String>() {
+    override fun doInBackground(vararg params: String): String {
+      // 可変長引数の1個目(インデックス0)を取得．これが都市ID
+      val id = params[0]
+      val urlStr = "http://weather.livedoor.com/forecast/webservice/json/v1?city=${id}"
+
+      // ここに上記URLに接続してJSON文字列を取得する処理を記述
+      // JSON文字列を返す
+      return result
+    }
+
+    override fun onPostExecute(result: String) {
+      // ここに天気情報JSON文字列を解析する処理を記述
+
+      // 天気情報用文字列をTextViewにセット
+      val tvWeatherTelop = findViewById<TextView>(R.id.tvWeatherTelop)
+      val tvWeatherDesc = findViewById<TextView>(R.id.tvWeatherDesc)
+      tvWeatherTelop.text = telop
+      tvWeatherDesc.text = desc
     }
   }
 }
