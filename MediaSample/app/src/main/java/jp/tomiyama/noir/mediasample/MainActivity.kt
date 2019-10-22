@@ -84,6 +84,26 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
+  fun onBackButtonClick(view: View) {
+    // 再生位置を先頭に変更
+    _player?.seekTo(0)
+  }
+
+  fun onForwardButtonClick(view: View) {
+    // フィールドのプレーヤーがnullじゃなかったら
+    _player?.let {
+      // 現在再生中のメディアファイルの長さを取得
+      val duration = it.duration
+      // 再生位置を終端に変更
+      it.seekTo(duration)
+      // 再生中でないなら...
+      if (!it.isPlaying) {
+        // 再生を開始
+        it.start()
+      }
+    }
+  }
+
   override fun onDestroy() {
     // 親クラスのメソッド呼び出し
     super.onDestroy()
