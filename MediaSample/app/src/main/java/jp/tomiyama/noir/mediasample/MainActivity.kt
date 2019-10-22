@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.CompoundButton
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import java.io.IOException
 
@@ -38,6 +40,11 @@ class MainActivity : AppCompatActivity() {
     } catch (ex: IOException) {
       Log.e("MediaSample", "メディアプレーヤー準備時の例外発生", ex)
     }
+
+    // スイッチを取得
+    val loopSwitch = findViewById<Switch>(R.id.swLoop)
+    // スイッチにリスナを設定
+    loopSwitch.setOnCheckedChangeListener(LoopSwitchChangedListener())
   }
 
   // プレーヤーの再生準備が整った時のリスナクラス
@@ -56,9 +63,22 @@ class MainActivity : AppCompatActivity() {
   // 再生が終了したときのリスナクラス
   private inner class PlayerCompletionListener : MediaPlayer.OnCompletionListener {
     override fun onCompletion(mp: MediaPlayer) {
-      // 再生ボタンのラベルを「再生」に設定
-      val btPlay = findViewById<Button>(R.id.btPlay)
-      btPlay.setText(R.string.bt_play_play)
+      // フィールドのプレーヤーがnullじゃなかったら
+      _player?.let {
+        // ループ設定がされていないならば
+        if (!it.isLooping) {
+          // 再生ボタンのラベルを「再生」に設定
+          val btPlay = findViewById<Button>(R.id.btPlay)
+          btPlay.setText(R.string.bt_play_play)
+        }
+      }
+    }
+  }
+
+  private inner class LoopSwitchChangedListener : CompoundButton.OnCheckedChangeListener {
+    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
+      // ループするかどうかを設定
+      _player?.isLooping = isChecked
     }
   }
 
