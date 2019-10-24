@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
   var mService: SoundManageService? = null
+  // 接続状況
   private var bound: Boolean = false
 
   // コネクション作成
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
       // BinderからServiceのインスタンスを取得
       mService = (service as SoundManageService.BindServiceBinder).getService()
       mService?.let {
-        if (mService!!.isPlay) {
+        if (mService!!.isPlaying()) {
           // 再生ボタンをタップ不可に，停止ボタンをタップ可に変更
           val btPlay = findViewById<Button>(R.id.btPlay)
           val btStop = findViewById<Button>(R.id.btStop)
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     // バインド開始
     bindService(Intent(this, SoundManageService::class.java), connection, Context.BIND_AUTO_CREATE)
     mService?.let {
-      if (!mService!!.isPlay) {
+      if (!mService!!.isPlaying()) {
         // 再生ボタンをタップ可に，停止ボタンをタップ可に変更
         val btPlay = findViewById<Button>(R.id.btPlay)
         val btStop = findViewById<Button>(R.id.btStop)
@@ -58,6 +59,22 @@ class MainActivity : AppCompatActivity() {
         btStop.isEnabled = false
       }
     }
+
+    /*
+    // SoundManageServiceにisPlayフィールドを導入して判定したので，利用せず
+
+    // Intentから通知のタップからの引き継ぎデータを取得
+    val fromNotification = intent.getBooleanExtra("fromNotification", false)
+    // 引き継ぎデータが存在，つまり通知のタップからならば...
+    if (fromNotification) {
+      // 再生ボタンをタップ不可に，停止ボタンをタップ可に変更
+      val btPlay = findViewById<Button>(R.id.btPlay)
+      val btStop = findViewById<Button>(R.id.btStop)
+      btPlay.isEnabled = false
+      btStop.isEnabled = true
+    }
+
+     */
   }
 
   fun onPlayButtonClick(view: View) {
