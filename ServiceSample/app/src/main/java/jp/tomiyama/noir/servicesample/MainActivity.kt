@@ -49,13 +49,20 @@ class MainActivity : AppCompatActivity() {
 
     // バインド開始
     bindService(Intent(this, SoundManageService::class.java), connection, Context.BIND_AUTO_CREATE)
+    mService?.let {
+      if (!mService!!.isPlay) {
+        // 再生ボタンをタップ可に，停止ボタンをタップ可に変更
+        val btPlay = findViewById<Button>(R.id.btPlay)
+        val btStop = findViewById<Button>(R.id.btStop)
+        btPlay.isEnabled = true
+        btStop.isEnabled = false
+      }
+    }
   }
 
   fun onPlayButtonClick(view: View) {
-
     // バインド開始
     bindService(Intent(this, SoundManageService::class.java), connection, Context.BIND_AUTO_CREATE)
-
     // インテントオブジェクトを生成
     val intent = Intent(applicationContext, SoundManageService::class.java)
     // サービスを起動
