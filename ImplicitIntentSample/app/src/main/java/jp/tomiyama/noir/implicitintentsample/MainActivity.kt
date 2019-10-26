@@ -1,10 +1,15 @@
 package jp.tomiyama.noir.implicitintentsample
 
+import android.content.Context
 import android.content.Intent
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import java.net.URLEncoder
 
@@ -12,8 +17,12 @@ class MainActivity : AppCompatActivity() {
 
   // 緯度フィールド
   private var _latitude = 0.0
-  // 軽度フィールド
+  // 経度フィールド
   private var _longitude = 0.0
+  // LocationManagerオブジェクトを取得
+  val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+  // 位置情報が更新された際のリスナオブジェクトを生成
+  private val locationListener = GPSLocationListener()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -45,5 +54,30 @@ class MainActivity : AppCompatActivity() {
     val intent = Intent(Intent.ACTION_VIEW, uri)
     // アクティビティを起動
     startActivity(intent)
+  }
+
+  private inner class GPSLocationListener : LocationListener {
+    override fun onLocationChanged(location: Location) {
+      // 引数のLocationオブジェクトから緯度を取得
+      _latitude = location.latitude
+      // 引数のLocationオブジェクトから経度を取得
+      _longitude = location.longitude
+      // 取得した緯度をTextViewに表示
+      val tvLatitude = findViewById<TextView>(R.id.tvLatitude)
+      tvLatitude.text = _latitude.toString()
+      // 取得した経度をTextViewに表示
+      val tvLongitude = findViewById<TextView>(R.id.tvLongitude)
+      tvLongitude.text = _longitude.toString()
+    }
+
+    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
+    }
+
+    override fun onProviderEnabled(provider: String) {
+    }
+
+    override fun onProviderDisabled(provider: String) {
+    }
+
   }
 }
