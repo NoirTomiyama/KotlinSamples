@@ -10,6 +10,11 @@ import java.net.URLEncoder
 
 class MainActivity : AppCompatActivity() {
 
+  // 緯度フィールド
+  private var _latitude = 0.0
+  // 軽度フィールド
+  private var _longitude = 0.0
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
@@ -23,6 +28,17 @@ class MainActivity : AppCompatActivity() {
     searchWord = URLEncoder.encode(searchWord, "UTF-8")
     // マップアプリと連携するURI文字列を生成
     val uriStr = "geo:0,0?q=${searchWord}"
+    // URI文字列からURIオブジェクトを生成
+    val uri = Uri.parse(uriStr)
+    // Intentオブジェクトを生成
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    // アクティビティを起動
+    startActivity(intent)
+  }
+
+  fun onMapShowCurrentButtonClick(view: View) {
+    // フィールドの緯度と経度の値をもとにマップアプリと連携するURI文字列を生成
+    val uriStr = "geo:${_latitude},${_longitude}"
     // URI文字列からURIオブジェクトを生成
     val uri = Uri.parse(uriStr)
     // Intentオブジェクトを生成
