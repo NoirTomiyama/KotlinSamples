@@ -19,14 +19,17 @@ class MainActivity : AppCompatActivity() {
   private var _latitude = 0.0
   // 経度フィールド
   private var _longitude = 0.0
-  // LocationManagerオブジェクトを取得
-  val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-  // 位置情報が更新された際のリスナオブジェクトを生成
-  private val locationListener = GPSLocationListener()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+
+    // LocationManagerオブジェクトを取得
+    val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    // 位置情報が更新された際のリスナオブジェクトを生成
+    val locationListener = GPSLocationListener()
+    // 位置情報の追跡を開始
+    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
   }
 
   fun onMapSearchButtonClick(view: View) {
