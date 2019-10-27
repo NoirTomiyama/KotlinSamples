@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -38,6 +40,24 @@ class MainActivity : AppCompatActivity() {
     val adapter = RecyclerListAdapter(menuList)
     // RecyclerViewにアダプタオブジェクトを設定
     lvMenu.adapter = adapter
+
+    // 区切り専用のオブジェクトを生成
+    val decorator = DividerItemDecoration(applicationContext, layout.orientation)
+    // RecyclerViewに区切り線オブジェクトを設定
+    lvMenu.addItemDecoration(decorator)
+  }
+
+  private inner class ItemClickListener : View.OnClickListener {
+    override fun onClick(view: View) {
+      // タップされたLinearLayout内にあるメニュー名表示TextViewを取得
+      val tvMenuName = view.findViewById<TextView>(R.id.tvMenuName)
+      // メニュー名表示TextViewから表示されているメニュー名文字列を取得
+      val menuName = tvMenuName.text.toString()
+      // トーストに表示する文字列を生成
+      val msg = getString(R.string.msg_header) + menuName
+      // トースト表示
+      Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+    }
   }
 
   private inner class RecyclerListAdapter(private val _listData: MutableList<MutableMap<String, Any>>) : RecyclerView.Adapter<RecyclerListViewHolder>() {
@@ -46,6 +66,8 @@ class MainActivity : AppCompatActivity() {
       val inflater = LayoutInflater.from(applicationContext)
       // row.xmlをインフレートし，1行分の画面部品とする
       val view = inflater.inflate(R.layout.row, parent, false)
+      // インフレートされた1行分の画面部品にリスナを設定
+      view.setOnClickListener(ItemClickListener())
       // ビューホルダーオブジェクトを生成
       val holder = RecyclerListViewHolder(view)
       // 生成したビューホルダーをリターン
